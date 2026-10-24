@@ -18,7 +18,7 @@ const GlobalToast = () => {
       onClose={hideMessage}
       anchorOrigin={{
         vertical: 'top',
-        horizontal: 'center///',
+        horizontal: 'center',
       }}
     >
       <Alert

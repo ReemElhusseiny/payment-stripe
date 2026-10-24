@@ -4,7 +4,6 @@
 import get from 'lodash/get';
 import { TableContainer, Paper, TableHead, TableRow, TableCell, TableBody, TablePagination, Table } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useTheme,alpha } from '@mui/material/styles';
 import LoadinginComp from '../../pages/LoadinginComp';
 import { FaRegFilePdf } from "react-icons/fa6";
 
@@ -39,7 +38,6 @@ interface TableDataType {
 
 export default function TableFiles(props: TableProbs) {
     const {tableColumns,page, setPage, loading, pageSize, setPageSize, totalCount, data, func, urlPage } = props
-    const theme = useTheme();
   const navigate = useNavigate();
   const [, setSearchParams] = useSearchParams();
 
@@ -50,8 +48,8 @@ const handleDownloadPDF = async (
   event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>,
   url: string
 ) => {
-  event.stopPropagation(); // منع ضغطة TableRow
-  event.preventDefault();  // منع الانتقال أو فتح Tab جديدة
+  event.stopPropagation();
+  event.preventDefault();
 
   try {
     const response = await fetch(url);
@@ -67,7 +65,7 @@ const handleDownloadPDF = async (
     window.URL.revokeObjectURL(blobUrl);
   } catch (error) {
     console.error("Download failed:", error);
-    window.location.href = url; // تنزيل مباشر في نفس الصفحة في حالة التعثر
+    window.location.href = url;
   }
 };
   return (
@@ -76,9 +74,7 @@ const handleDownloadPDF = async (
       <Table sx={{ minWidth: 650, borderCollapse: 'separate', borderSpacing: '0 10px',
    }} aria-label="simple table">
         <TableHead style={{ 
-  // 🎯 القيمة 0.08 يعني الشفافية 8%، دي هتخلي اللون فاتح جداً (Light) وهادي وميغطيش على الكلام
   background: '#eef0ff'
-  // background: alpha(theme.colors.primary, 0.08) 
 }}>
           <TableRow>
             {tableColumns?.map((item)=> {
@@ -100,10 +96,7 @@ const handleDownloadPDF = async (
               transform: 'translateY(-1px)',
               boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
             },
-            
-          '& td:first-of-type': {
-      // borderLeft: `3px solid ${theme.colors.primary}`,
-    },
+          
     }}
             onClick= {() => {
                if(urlPage){
@@ -113,7 +106,6 @@ const handleDownloadPDF = async (
         
           >
             {tableColumns.map((col) => {
-              // بنجيب القيمة ديناميكياً للشركة الحالية والعمود الحالي
               const cellValue = get(company, col.id, 'N/A');
               console.log("cellValue", cellValue)
               console.log("col", col)
@@ -122,10 +114,8 @@ const handleDownloadPDF = async (
                  onClick={(event) => {
   event.stopPropagation();
   
-  // لقطنا أول ملف من الأراي (بتاع بوسطة أو ويفو)
   const firstFile = Array.isArray(company?.files) ? company?.files?.[0] : company?.files;
 
-  // بننادي الـ Prop المبعوت من الأب وبنديله الداتا الصح
   func?.(
     firstFile?.file_base64 || '',
     firstFile?.file_name || 'download',
@@ -153,7 +143,6 @@ const handleDownloadPDF = async (
       onClick={(e) => handleDownloadPDF(e, pdfUrl)}
       className="inline-flex items-center gap-2 px-5 py-2 text-sm font-semibold text-gray-900 bg-white border border-indigo-100 rounded-full hover:bg-[#3730a3] hover:text-white transition-colors cursor-pointer shadow-sm"
     >
-      {/* أيقونة المستند المماثلة للصورة */}
   <FaRegFilePdf />
       Download PDF
     </button>
@@ -184,7 +173,7 @@ const handleDownloadPDF = async (
   rowsPerPageOptions={[1, 5, 10, 25]}
   count={totalCount ?? 0}
   rowsPerPage={pageSize ?? 10} 
-  page={page} // الصفحة الحالية
+  page={page}
   onPageChange={(_event, newPage) => setPage(newPage)}
   onRowsPerPageChange={(event) => {
      const newSize = parseInt(event.target.value, 10);

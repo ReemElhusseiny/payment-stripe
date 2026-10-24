@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react'
 import {
   FiUser,
   FiEdit2,
@@ -10,7 +9,6 @@ function PersonalInfo() {
      const {
         user
       } = useUserStore();
-    console.log('userTest', user)
   return (
        <div className="lg:col-span-4 bg-white rounded-2xl p-6 shadow-sm flex flex-col justify-between">
             <div>
@@ -31,15 +29,6 @@ function PersonalInfo() {
             </div>
 
             <div className="mt-6 pt-4 border-t border-gray-100 space-y-3">
-              {/* <div className="flex items-start gap-2.5">
-                <FiBriefcase className="w-4 h-4 text-gray-600 mt-0.5" />
-                <div>
-                  <p className="text-xs text-gray-500 font-medium">Workspace</p>
-                  <p className="text-xs font-semibold text-gray-800">
-                    Maya Finance Studio
-                  </p>
-                </div>
-              </div> */}
 
               <div className="flex items-start gap-2.5">
                 <FiCalendar className="w-4 h-4 text-gray-600 mt-0.5" />

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-  Elements,
   useStripe,
   useElements,
   CardNumberElement,
@@ -11,7 +10,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, CreditCard, Edit2, Grid, QrCode, Receipt, Smartphone, Wifi, X } from "lucide-react";
 import {  useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 type SelectedPlan = {
@@ -34,7 +33,6 @@ export default function CheckoutForm({
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
-  const location = useLocation();
 
 
   const [paymentMethod, setPaymentMethod] = useState<"card" | "cashapp">("card");
@@ -69,7 +67,7 @@ export default function CheckoutForm({
     });
 
     if (error) {
-      setExpressError(error.message || "حدث خطأ أثناء معالجة الدفع السريع");
+      setExpressError(error.message || "Something went wronhg");
     } else {
       navigate(`/payment-processing?subscription_id=${subscriptionId}`, {state: {planId: selectedPlan?.id}});
     }

@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-hooks/set-state-in-effect */
-// src/App.tsx
-
 import {Navigate, RouterProvider, createBrowserRouter } from "react-router-dom";
 import MainLayout from "./MainLayout";
 import AuthContainer from "./pages/AuthContainer";
@@ -14,11 +10,6 @@ import PaymentProcessing from "./pages/PaymentProcessing";
 import Profile from "./pages/Profile";
 import { useEffect } from "react";
 import useUserStore from "./Store/AuthStore";
-import ProcessingUI from "./pages/ProcessingUI";
-import PaymentSuccessUI from "./pages/PaymentSuccessUI";
-import PaymentErrorUI from "./pages/PaymentErrorUI";
-import PaymentFailedUI from "./pages/PaymentFailedUI";
-import PaymentActionRequiredUI from "./pages/PaymentActionRequiredUI";
 import AuthGuard from "./components/RouteGuard";
 import Payment from "./pages/Payment";
 
@@ -36,11 +27,6 @@ interface route {
     { path: "/register", element: <AuthContainer /> },
     { path: "/loading", element: <Loading /> },
     {path: 'profile', element: <Profile />},
-    // {path: 'processing', element: <ProcessingUI />},
-    // {path: 'payment-success', element: <PaymentSuccessUI /> },
-    // {path: 'payment-error', element: <PaymentErrorUI /> },
-    // {path: 'payment-failed', element: <PaymentFailedUI /> },
-    // {path: 'payment-required', element: <PaymentActionRequiredUI /> },
 
   {
 path: "/payments",
@@ -80,15 +66,12 @@ element: (
   ]);
 export default function App() {
   useEffect(() => {
-  // تشغيل التهيئة عند تحميل التطبيق لاسترجاع البيانات الكاملة
   useUserStore.getState().initAuth();
 }, []);
   return (
 <ColorProvider>
-      {/* <AppInitializer> */}
         <RouterProvider router={router} />
         <GlobalToast />
-      {/* </AppInitializer> */}
     </ColorProvider>
   )
 }

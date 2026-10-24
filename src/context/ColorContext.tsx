@@ -1,10 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
 // src/context/ColorContext.tsx
 import React, { createContext, useState, useMemo, type ReactNode } from 'react';
-import { generateTheme } from '../Themes/ThemeConfig'; // تأكدي من صحة المسار لـ ThemeConfig
+import { generateTheme } from '../Themes/ThemeConfig';
 import { ThemeProvider } from '@mui/material/styles';
 
-// 1. تعريف الـ Types الخاصة بالـ Context
  interface ColorContextType {
   userColors: {
     primary: string;

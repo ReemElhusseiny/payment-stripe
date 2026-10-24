@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-// import axios from "axios";
 import PaymentSuccessUI from "./PaymentSuccessUI";
 import ProcessingUI from "./ProcessingUI";
 import PaymentFailedUI from "./PaymentFailedUI";
@@ -49,7 +48,7 @@ const subscriptionId = searchParams.get("subscription_id");
   const [paymentStatus, setPaymentStatus] =
     useState<PaymentStatus>("pending");
 
-  const [subscriptionStatus, setSubscriptionStatus] =
+  const [, setSubscriptionStatus] =
     useState<SubscriptionStatus | null>(null);
 
   const [loading, setLoading] = useState(true);

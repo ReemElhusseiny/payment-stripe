@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
-import { useNavigate } from 'react-router';
 import { useTheme } from '@mui/material/styles';
 import useUserStore from '../Store/AuthStore';
 
