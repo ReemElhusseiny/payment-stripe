@@ -45,9 +45,7 @@ const handleLogin = async () => {
     else if(response?.user?.is_active === false){
       navigate("/payments")
     }
-   console.log('resLogin', response)
   } catch (error: unknown) {
-    console.error("Login failed:", error);
     const err = error as ErrorResponse;
     const errorMsg = err?.message || "Invalid login credentials";
       setError("password", { type: "server", message: errorMsg });

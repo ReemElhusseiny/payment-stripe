@@ -36,7 +36,6 @@ function Register({ setFormType }: RegisterProps) {
 const handleZuRegister = async () => {
   const isFormValid = await trigger();
   if (!isFormValid) {
-    console.log("Form validation failed. Missing fields.");
     return; 
   }
   try {
@@ -48,7 +47,6 @@ const handleZuRegister = async () => {
       lastName: values.lastName
     }
    const response =  await register(body);
-   console.log('resReg', response)
    if(response.success === true){
     navigate('/login')
    }

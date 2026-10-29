@@ -31,7 +31,6 @@ try {
     endpoints.payment.manageSub,
     params
   );
-  console.log("responseActions", response)
       set({ loading: false });
       useToastStore.getState().showMessage(
         'success',
@@ -42,7 +41,6 @@ try {
 catch (err: unknown) {
       set({ loading: false });
       if (axios.isAxiosError(err)) {
-    console.log('errAction',err?.response)
   useToastStore.getState().showMessage(
       err.response?.data?.error  || "Action failed", 
       'error'

@@ -38,14 +38,12 @@ try {
     endpoints.payment.payment,
     params
   );
-  console.log("responsePayment", response)
       set({ loading: false });
        return response.data;
 }
 catch (err: unknown) {
       set({ loading: false });
       if (axios.isAxiosError(err)) {
-    console.log('errPayment22',err.response?.data?.error)
   useToastStore.getState().showMessage(
       err?.response?.data?.error || "Payment failed", 
       'error'

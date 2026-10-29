@@ -53,7 +53,6 @@ try {
 catch (err: unknown) {
       set({ loading: false });
       if (axios.isAxiosError(err)) {
-    console.log('errAction',err)
   useToastStore.getState().showMessage(
       err.response?.data?.error || "Action failed", 
       'error'

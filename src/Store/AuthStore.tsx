@@ -5,6 +5,7 @@
 import { create } from "zustand";
 import apiToken, { endpoints } from "../apisConfig/apis";
 import { supabase } from '../lib/supabase';
+import { useToastStore } from "./toastStore";
 
 
 interface User {
@@ -62,34 +63,21 @@ interface UserStore {
     last_name?: string | null;
     created_at?: string | null;
   } | null>;
-  initAuth: () => Promise<void>;
   logout: () => Promise<void>;
-  refreshUser: () => Promise<User | null>;
+   initAuth: () => Promise<void>;
+  // refreshUser: () => Promise<User | null>;
   authReady: boolean;
 }
 
 export const useUserStore = create<UserStore>((set, get) => ({
   user: null,
   loading: "idle",
-    authReady: false,
-  // userActive: null,
-  // authReady: false,
-  // status: null,
-  // start_at: null,
-  // end_at: null,
-  // created_at: null,
-
-  // setUser: (user) => set({ user }),
-  // setUserActive: (active) => set({ userActive: active }),
-  // setStatus: (status) => set({ status }),
-  // setAuthReady: (ready) => set({ authReady: ready }),
-
-  // أضيفي هذه الدالة داخل الـ Store
-initAuth: async () => {
+  authReady: false,
+ 
+  initAuth: async () => {
   set({ loading: "pending" });
   try {
     const { data: { session } } = await supabase.auth.getSession();
-      console.log("session", session);
     if (!session?.user) {
       set({ user: null, loading: "idle", authReady: true, });
       // set({ user: null, loading: "idle", authReady: true });
@@ -98,7 +86,6 @@ initAuth: async () => {
 
     const user = session.user;
     const profile = await get().fetchProfile(user.id);
-   console.log("profile", profile);
     const firstName =
       user.user_metadata?.firstName ||
       user.user_metadata?.first_name ||
@@ -137,63 +124,59 @@ initAuth: async () => {
     // set({ loading: "idle", authReady: true });
   }
 },
-// AuthStore.ts
-refreshUser: async () => {
-  // getUser بيجيب من السيرفر، أضمن من getSession (اللي ممكن يرجع cache)
-  const { data: { user: authUser } } = await supabase.auth.getUser();
-  if (!authUser) {
-    set({ user: null });
-    return null;
-  }
+// refreshUser: async () => {
+//   const { data: { user: authUser } } = await supabase.auth.getUser();
+//   if (!authUser) {
+//     set({ user: null });
+//     return null;
+//   }
 
-  const profile = await get().fetchProfile(authUser.id);
+//   const profile = await get().fetchProfile(authUser.id);
 
-  const user: User = {
-    id: authUser.id,
-    email: authUser.email || "",
-    firstName:
-      authUser.user_metadata?.firstName ||
-      authUser.user_metadata?.first_name ||
-      profile?.first_name || "",
-    lastName:
-      authUser.user_metadata?.lastName ||
-      authUser.user_metadata?.last_name ||
-      profile?.last_name || "",
-    start_at: profile?.start_at ?? null,
-    end_at: profile?.end_at ?? null,
-    created_at: profile?.created_at ?? null,
-    status: profile?.status ?? null,
-    is_active: profile?.is_active ?? false,
-  };
+//   const user: User = {
+//     id: authUser.id,
+//     email: authUser.email || "",
+//     firstName:
+//       authUser.user_metadata?.firstName ||
+//       authUser.user_metadata?.first_name ||
+//       profile?.first_name || "",
+//     lastName:
+//       authUser.user_metadata?.lastName ||
+//       authUser.user_metadata?.last_name ||
+//       profile?.last_name || "",
+//     start_at: profile?.start_at ?? null,
+//     end_at: profile?.end_at ?? null,
+//     created_at: profile?.created_at ?? null,
+//     status: profile?.status ?? null,
+//     is_active: profile?.is_active ?? false,
+//   };
 
-  set({ user }); // من غير ما نلمس authReady عشان ما يظهرش Loading
-  return user;
-},
+//   set({ user });
+//   return user;
+// },
   register: async (params: any) => {
     const url = endpoints.user.register;
     set({ loading: "pending" });
 
     try {
       const response = await apiToken.post<RegisterResponse>(url, params);
-      // {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     apikey: supabaseAnonKey,
-      //   },
-      // }
 
       const data = response.data;
-
       set({
         loading: "idle",
         user: data.user,
-        // userActive: null,
-        // status: null,
       });
-
+  useToastStore.getState().showMessage(
+        'Registered Succesfully',
+      'success'
+  )
       return data;
     } catch (err: any) {
       set({ loading: "idle" });
+      useToastStore.getState().showMessage(
+       err.response?.data?.message || 'Registered Failed',
+      'error'
+  )
       throw err.response?.data;
     }
   },
@@ -202,11 +185,10 @@ refreshUser: async () => {
     const { data, error } = await supabase
       .from("Profile")
       .select("*")
-      .eq("id", userId) // تأكدي أن العمود اسم "user_id" أو "id" في جدول Profile
+      .eq("id", userId)
       .maybeSingle();
 
     if (error) throw error;
-    console.log("dataProfile", data);
 
     return {
       status: data?.status ?? null,
@@ -232,9 +214,7 @@ refreshUser: async () => {
       if (error) throw error;
 
       const profile = await get().fetchProfile(data.user.id);
-      console.log("profileFetched$$", profile);
 
-      // فحص أين توجد الأسماء (في الـ Metadata أم في جدول Profile)
       const firstName =
         data.user.user_metadata?.firstName ||
         data.user.user_metadata?.first_name ||
@@ -261,22 +241,22 @@ refreshUser: async () => {
 
       set({
         user: userData,
-        // userActive: profile?.is_active ?? null,
-        // status: profile?.status ?? null,
-        // start_at: profile?.start_at ?? null,
-        // end_at: profile?.end_at ?? null,
         loading: "idle",
       });
-
+ useToastStore.getState().showMessage(
+        'Login Succesfully',
+      'success'
+  )
       return {
         user: userData,
-        // userActive: profile?.is_active ?? null,
-        // status: profile?.status ?? null,
-        // start_at: profile?.start_at ?? null,
-        // end_at: profile?.end_at ?? null,
       };
-    } catch (err) {
+      
+    } catch (err: any) {
       set({ loading: "idle" });
+       useToastStore.getState().showMessage(
+        err?.message || 'Login Failed',
+      'error'
+  )
       throw err;
     }
   },
@@ -286,8 +266,6 @@ refreshUser: async () => {
     try {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
-
-      // تصفير كل قيم الحساب بالكامل
       set({
         loading: "idle",
         user: null,

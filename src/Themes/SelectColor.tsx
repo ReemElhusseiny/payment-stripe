@@ -94,7 +94,6 @@ function ColorSection({ label, presets, color, onChange }: ColorSectionProps) {
 }
 
 export default function ColorCustomizerSidebar({toggleDrawer, userColors, setUserColors, open}: any) {
-  console.log('User Colors in Sidebar:', open);
    const handleResetColors = () => {
     localStorage.getItem('primary') ;
     localStorage.getItem('secondary');

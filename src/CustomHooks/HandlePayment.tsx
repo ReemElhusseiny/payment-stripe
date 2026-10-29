@@ -23,8 +23,6 @@ function useHandlePayment() {
         priceId: selectedPlan.priceId,
         title: selectedPlan.title,
       });
-      console.log('selectedData', selectedPlan)
-      console.log('responseStripe', response)
       // const { icon, ...planDataWithoutIcon } = selectedPlan;
       if (response?.clientSecret) {
         setCheckoutData({
@@ -37,7 +35,6 @@ function useHandlePayment() {
         showMessage("Failed to initialize payment", "error");
       }
     } catch (err: any) {
-      console.log("err**", err?.response?.data?.error)
       showMessage(err?.response?.data?.error || 'An unexpected error' , 'error');
     } finally {
       setIsPreparing(false);

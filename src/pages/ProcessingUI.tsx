@@ -25,9 +25,7 @@ const spokes = Array.from({ length: SPOKES }, (_, i) => ({
   rotate: (360 / SPOKES) * i,
   delay: (DURATION / SPOKES) * i,
 }));
-console.log('selectedPlanProcessing', selectedPlan);
 const getPlan = PLANS?.find((item) => item.id === String(selectedPlan))
-console.log('getPlanProcessing', getPlan);
   return (
     <div className="min-h-screen w-full bg-[#F8FAFC] flex items-center justify-center p-4">
       {/* Card Container */}

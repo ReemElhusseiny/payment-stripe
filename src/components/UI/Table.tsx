@@ -107,8 +107,7 @@ const handleDownloadPDF = async (
           >
             {tableColumns.map((col) => {
               const cellValue = get(company, col.id, 'N/A');
-              console.log("cellValue", cellValue)
-              console.log("col", col)
+
               if (col.label === 'Actions') return (
                 <TableCell
                  onClick={(event) => {

@@ -5,7 +5,6 @@ function CurrentPlan() {
      const {
             user
           } = useUserStore();
-          console.log('uers##', user)
 function getSubscriptionPlanInfo(startAt?: string | null, endAt?: string | null) {
   if (!startAt || !endAt) {
     return { title: "No Active Plan", period: "N/A" };

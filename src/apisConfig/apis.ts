@@ -22,7 +22,6 @@ apiToken.interceptors.request.use(
     if (session?.access_token) {
       config.headers["Authorization"] = `Bearer ${session.access_token}`;
     }
-   console.log('congigTest', config)
     return config;
   },
   (error) => {

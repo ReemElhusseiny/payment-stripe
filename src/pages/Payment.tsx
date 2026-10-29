@@ -142,7 +142,7 @@ function Payment() {
        key="checkout"
        label="Checkout Form"
        renderTitle={({ handleOpen }: { handleOpen: () => void }) => {
-        console.log("RenderTitle is working!");
+
         return(
          <div className="bg-white py-2 px-3 w-full rounded-2xl shadow-xl">
         <motion.button

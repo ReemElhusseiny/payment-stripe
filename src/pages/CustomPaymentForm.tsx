@@ -67,7 +67,6 @@ export default function CheckoutForm({
     });
 
     if (error) {
-       console.log("error$$2", error)
       setExpressError(error.message || "Something went wronhg");
     } else {
       navigate(`/payment-processing?subscription_id=${subscriptionId}`, {state: {planId: selectedPlan?.id}});
@@ -97,14 +96,11 @@ export default function CheckoutForm({
         },
       }
     );
-    console.log('paymentIntent', paymentIntent )
     setLoading(false);
 
     if (error) {
       console.log("error$$", error)
-      // alert(error.message || "Payment Failed");
     } else if (paymentIntent?.status === "succeeded") {
-    // بدل navigate("/success")
     navigate(`/payment-processing?subscription_id=${subscriptionId}`, {state: {planId: selectedPlan?.id}});
   }
   };

@@ -40,7 +40,6 @@ export default function PaymentProcessing() {
   const navigate = useNavigate();
   const location = useLocation()
  const selectedPlan = location.state?.planId;
- console.log('selectedPlanPayment-Processing', selectedPlan);
   const [searchParams] = useSearchParams();
 
 const subscriptionId = searchParams.get("subscription_id");
@@ -82,8 +81,7 @@ useEffect(() => {
       if (!isMounted) return;
 
       const data = response.data.data;
-      console.log('dataPayment', data)
-      console.log('reponsePayment', response)
+
 
       setPaymentStatus(data.paymentStatus);
 

@@ -13,7 +13,6 @@ import { dashboardRoutes } from './MenuItems';
 import useUserStore from './Store/AuthStore';
 
 interface SidebarContentProps {
-  /** بتتنادى لما اليوزر يدوس على لينك (بنستخدمها نقفل الـ drawer على الموبايل) */
   onNavigate?: () => void;
 }
 

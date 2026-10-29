@@ -16,18 +16,16 @@ export const PaymentSuccessUI: React.FC<PaymentSuccessProps> = ({
 
 }) => {
   const navigate = useNavigate();
-  console.log('getPlanSuccesSucces', selectedPlan);
   const getPlanSucces = PLANS?.find((item) => item.id === String(selectedPlan))
-  console.log('getPlanSuccesSuccess', getPlanSucces);
 
-  const { refreshUser } = useUserStore();
+  const { initAuth } = useUserStore();
 
 const handleGoToDashboard = async () => {
-   await refreshUser();
+   await initAuth();
    navigate('/dashboard')
 }
 const handleGoToInvoices = async () => {
-   await refreshUser();
+   await initAuth();
    navigate('/profile')
 }
 
