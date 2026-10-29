@@ -27,11 +27,12 @@ interface route {
     { path: "/register", element: <AuthContainer /> },
     { path: "/loading", element: <Loading /> },
     {path: 'profile', element: <Profile />},
+    // {path: 'testSucces', element: <PaymentSuccessUI />},
 
   {
 path: "/payments",
 element: (
-<AuthGuard allowedStatuses={["inactive"]}>
+<AuthGuard allowedStatuses={["inactive", "active"]}>
 <Payment />
 </AuthGuard>
 ),

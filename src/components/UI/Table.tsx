@@ -79,7 +79,7 @@ const handleDownloadPDF = async (
           <TableRow>
             {tableColumns?.map((item)=> {
                 return(
-                     <TableCell sx={{ fontWeight: 'bold' }} align="left">{item.label}</TableCell>
+                     <TableCell key={item?.id} sx={{ fontWeight: 'bold' }} align="left">{item.label}</TableCell>
                 )
             })}
           </TableRow>

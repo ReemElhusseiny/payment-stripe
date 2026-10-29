@@ -13,7 +13,7 @@ interface ButtonProps {
   disabledProp? : boolean;
 }
 
-export function ButtonComp({ fnc, sx, className, icon, name,disabledProp }: ButtonProps) {
+export function ButtonComp({ fnc, sx, className, icon, name,disabledProp, }: ButtonProps) {
   const theme = useTheme();
 
   return (

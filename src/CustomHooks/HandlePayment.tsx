@@ -37,7 +37,8 @@ function useHandlePayment() {
         showMessage("Failed to initialize payment", "error");
       }
     } catch (err: any) {
-      showMessage(err?.message || 'An unexpected error' , 'error');
+      console.log("err**", err?.response?.data?.error)
+      showMessage(err?.response?.data?.error || 'An unexpected error' , 'error');
     } finally {
       setIsPreparing(false);
     }

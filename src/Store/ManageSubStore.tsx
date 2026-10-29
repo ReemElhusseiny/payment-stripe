@@ -33,14 +33,18 @@ try {
   );
   console.log("responseActions", response)
       set({ loading: false });
+      useToastStore.getState().showMessage(
+        'success',
+      'success'
+  )
        return response.data;
 }
 catch (err: unknown) {
       set({ loading: false });
       if (axios.isAxiosError(err)) {
-    console.log('errAction',err)
+    console.log('errAction',err?.response)
   useToastStore.getState().showMessage(
-      err.response?.data?.error || "Action failed", 
+      err.response?.data?.error  || "Action failed", 
       'error'
   )
   }

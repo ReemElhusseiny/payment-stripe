@@ -39,7 +39,7 @@ const itemVariants = {
 };
 
 
-const BulkUpdateSx = {
+const ModalSx = {
   width: {
     xs: '95%',
     lg: '100%',
@@ -49,8 +49,25 @@ const BulkUpdateSx = {
     xs: 780,
     lg: 900,
   },
+  overflowY: 'auto',
   borderRadius: '28px',
   boxShadow: 24,
+  scrollbarWidth: 'thin',
+  scrollbarColor: '#cbd5e1 #f1f5f9',
+  '&::-webkit-scrollbar': {
+    width: '6px',
+  },
+  '&::-webkit-scrollbar-track': {
+    background: 'transparent',
+    margin: '16px 0',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: '#cbd5e1', 
+    borderRadius: '9999px',
+    '&:hover': {
+      backgroundColor: '#94a3b8',
+    },
+  },
 };
 
 function Payment() {
@@ -61,12 +78,12 @@ function Payment() {
       <div className="w-full h-full bg-[#F8FAFC] font-sans text-slate-800 p-4 sm:p-6 md:p-[10px] flex flex-col items-center relative">
     <div className="w-full flex justify-end">
      <div className="flex gap-3 rounded-2xl bg-white p-2 shadow-sm border border-gray-100 mb-2">
-      <p onClick={() => navigate("/profile")} className="flex items-center gap-2 rounded-xl bg-[#EEF0FE] py-1.5 px-3 transition hover:bg-[#E2E5FD]">
+      <div onClick={() => navigate("/profile")} className="cursor-pointer flex items-center gap-2 rounded-xl bg-[#EEF0FE] py-1.5 px-3 transition hover:bg-[#E2E5FD]">
         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#3F33D1] text-white">
           <MdOutlinePersonOutline size="18px" />
         </div>
         <span className="text-sm font-bold text-gray-900">Profile</span>
-      </p>
+      </div>
   
       {/* Divider */}
       <div className="h-5 w-[1px] bg-gray-200" />
@@ -151,7 +168,7 @@ function Payment() {
               </div>
         )
        }}
-       sx={BulkUpdateSx}
+       sx={ModalSx}
        children={ checkoutData && (
         <Elements
       key={checkoutData.clientSecret}

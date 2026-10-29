@@ -64,6 +64,7 @@ interface UserStore {
   } | null>;
   initAuth: () => Promise<void>;
   logout: () => Promise<void>;
+  refreshUser: () => Promise<User | null>;
   authReady: boolean;
 }
 
@@ -136,7 +137,38 @@ initAuth: async () => {
     // set({ loading: "idle", authReady: true });
   }
 },
+// AuthStore.ts
+refreshUser: async () => {
+  // getUser بيجيب من السيرفر، أضمن من getSession (اللي ممكن يرجع cache)
+  const { data: { user: authUser } } = await supabase.auth.getUser();
+  if (!authUser) {
+    set({ user: null });
+    return null;
+  }
 
+  const profile = await get().fetchProfile(authUser.id);
+
+  const user: User = {
+    id: authUser.id,
+    email: authUser.email || "",
+    firstName:
+      authUser.user_metadata?.firstName ||
+      authUser.user_metadata?.first_name ||
+      profile?.first_name || "",
+    lastName:
+      authUser.user_metadata?.lastName ||
+      authUser.user_metadata?.last_name ||
+      profile?.last_name || "",
+    start_at: profile?.start_at ?? null,
+    end_at: profile?.end_at ?? null,
+    created_at: profile?.created_at ?? null,
+    status: profile?.status ?? null,
+    is_active: profile?.is_active ?? false,
+  };
+
+  set({ user }); // من غير ما نلمس authReady عشان ما يظهرش Loading
+  return user;
+},
   register: async (params: any) => {
     const url = endpoints.user.register;
     set({ loading: "pending" });

@@ -45,9 +45,9 @@ try {
 catch (err: unknown) {
       set({ loading: false });
       if (axios.isAxiosError(err)) {
-    console.log('errPayment',err.response?.data?.error)
+    console.log('errPayment22',err.response?.data?.error)
   useToastStore.getState().showMessage(
-      err.response?.data?.error || "Payment failed", 
+      err?.response?.data?.error || "Payment failed", 
       'error'
   )
   }

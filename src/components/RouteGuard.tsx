@@ -16,9 +16,8 @@ export default function AuthGuard({
   const location = useLocation();
 
     if (!authReady) {
-    return <Loading />; // أو Spinner بتاعك
+    return <Loading />;
   }
-  // No user → Login
   if (!user) {
     return (
       <Navigate
@@ -29,9 +28,7 @@ export default function AuthGuard({
     );
   }
 
-  const status = user?.is_active === true ? "active" : "inactive";
-  console.log('user#', user);
-  // User cannot access this group of routes
+  const status = user?.is_active ? "active" : "inactive";
  if (!allowedStatuses.includes(status)) {
     const fallbackRoute = status === "active" ? "/dashboard" : "/payments";
     return (

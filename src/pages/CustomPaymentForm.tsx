@@ -67,6 +67,7 @@ export default function CheckoutForm({
     });
 
     if (error) {
+       console.log("error$$2", error)
       setExpressError(error.message || "Something went wronhg");
     } else {
       navigate(`/payment-processing?subscription_id=${subscriptionId}`, {state: {planId: selectedPlan?.id}});
@@ -100,7 +101,8 @@ export default function CheckoutForm({
     setLoading(false);
 
     if (error) {
-      alert(error.message || "Payment Failed");
+      console.log("error$$", error)
+      // alert(error.message || "Payment Failed");
     } else if (paymentIntent?.status === "succeeded") {
     // بدل navigate("/success")
     navigate(`/payment-processing?subscription_id=${subscriptionId}`, {state: {planId: selectedPlan?.id}});
@@ -109,7 +111,7 @@ export default function CheckoutForm({
 
   return (
     <div className="w-full h-full flex items-center justify-center font-sans">
-      <div className="w-full h-full bg-white overflow-hidden relative flex flex-col lg:flex-row">
+    <div className="w-full h-full bg-white overflow-y-auto lg:overflow-hidden relative flex flex-col lg:flex-row">
 
         <div className="flex-1 p-8 sm:p-10">
           {/* Header & Logo */}

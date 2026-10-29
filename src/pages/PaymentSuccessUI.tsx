@@ -1,9 +1,11 @@
 
+'use client'
 import React from 'react';
 import { HiCheckCircle, HiArrowRight } from 'react-icons/hi';
 import { useNavigate } from "react-router-dom";
 import { ButtonComp } from "../components/UI/ButtonComp";
 import { PLANS } from '../components/Payments/Data';
+import useUserStore from '../Store/AuthStore';
 
 interface PaymentSuccessProps {
   selectedPlan?: string;
@@ -17,6 +19,18 @@ export const PaymentSuccessUI: React.FC<PaymentSuccessProps> = ({
   console.log('getPlanSuccesSucces', selectedPlan);
   const getPlanSucces = PLANS?.find((item) => item.id === String(selectedPlan))
   console.log('getPlanSuccesSuccess', getPlanSucces);
+
+  const { refreshUser } = useUserStore();
+
+const handleGoToDashboard = async () => {
+   await refreshUser();
+   navigate('/dashboard')
+}
+const handleGoToInvoices = async () => {
+   await refreshUser();
+   navigate('/profile')
+}
+
   return (
     <div className="min-h-screen w-full bg-[#F8FAFC] flex items-center justify-center p-4">
       {/* Card Container */}
@@ -73,14 +87,14 @@ export const PaymentSuccessUI: React.FC<PaymentSuccessProps> = ({
           <ButtonComp
             name="Go to dashboard"
             icon={<HiArrowRight className="w-3.5 h-3.5" />}
-            fnc={() => navigate('/dashboard')}
+            fnc={handleGoToDashboard}
             className="w-full py-2.5 px-4 !bg-[#3F33D1] hover:!bg-[#3730A3] text-white text-xs font-semibold rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm shadow-indigo-500/10"
           />
          
           <ButtonComp
            icon=""
            name=" View invoices"
-            fnc={() => navigate('/profile')}
+            fnc={handleGoToInvoices}
             className="w-full py-2.5 px-4 !bg-white hover:!bg-slate-50 !text-slate-700 text-xs font-semibold rounded-xl !border !border-slate-200 transition-colors cursor-pointer"
          />
            
